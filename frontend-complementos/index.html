@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Nova Salud</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">💊</div>
+      <div class="brand-text">
+        <div class="brand-name">Nova Salud</div>
+        <div class="brand-sub">Sistema de Ventas</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Menú Principal</div>
+      <a href="index.html" class="nav-link active">
+        <span class="nav-icon">📊</span> Dashboard
+      </a>
+      <a href="inventario.html" class="nav-link">
+        <span class="nav-icon">📦</span> Inventario
+      </a>
+      <a href="historial.html" class="nav-link">
+        <span class="nav-icon">🧾</span> Historial de Ventas
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="btn-logout" onclick="logout()">
+        <span>🚪</span> Cerrar Sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-title">Dashboard</div>
+      <div class="topbar-right">
+        <div class="topbar-user">
+          <div class="user-avatar" id="user-avatar">A</div>
+          <div>
+            <div class="user-name" id="user-name">Administrador</div>
+            <div class="user-role" id="user-role">Vendedor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1>Resumen del Día</h1>
+          <p id="fecha-hoy"></p>
+        </div>
+        <span class="badge badge-success">● Sistema Activo</span>
+      </div>
+
+      <!-- Tarjetas de estadísticas -->
+      <div class="cards-grid">
+        <div class="card stat-card">
+          <div class="stat-icon icon-blue">💰</div>
+          <div class="stat-label">Ventas de Hoy</div>
+          <div class="stat-value" data-count="1250" data-prefix="S/ " data-suffix="">S/ 0.00</div>
+          <div class="stat-meta">↑ 8.5% respecto a ayer</div>
+        </div>
+
+        <div class="card stat-card">
+          <div class="stat-icon icon-orange">⚠️</div>
+          <div class="stat-label">Stock Bajo</div>
+          <div class="stat-value" data-count="3">0</div>
+          <div class="stat-meta">productos bajo mínimo</div>
+        </div>
+
+        <div class="card stat-card">
+          <div class="stat-icon icon-teal">🛒</div>
+          <div class="stat-label">Total Transacciones</div>
+          <div class="stat-value" data-count="45">0</div>
+          <div class="stat-meta">ventas registradas hoy</div>
+        </div>
+
+        <div class="card stat-card">
+          <div class="stat-icon icon-green">📋</div>
+          <div class="stat-label">Ticket Promedio</div>
+          <div class="stat-value" data-count="27.78" data-prefix="S/ ">S/ 0.00</div>
+          <div class="stat-meta">por venta hoy</div>
+        </div>
+      </div>
+
+      <!-- Gráfico + Alertas -->
+      <div style="display: grid; grid-template-columns: 1fr 340px; gap: 20px; align-items: start;">
+
+        <!-- Gráfico de ventas -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Ventas — Últimos 7 días</div>
+              <div class="chart-sub">Ingresos diarios en soles (S/)</div>
+            </div>
+            <span class="badge badge-info">Simulado</span>
+          </div>
+          <div style="height: 280px; position: relative;">
+            <canvas id="salesChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Alertas stock bajo -->
+        <div class="card" style="padding: 20px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+            <div>
+              <div class="chart-title">⚠ Stock Bajo</div>
+              <div class="chart-sub">Productos críticos</div>
+            </div>
+            <a href="inventario.html" class="btn btn-sm btn-outline">Ver todos</a>
+          </div>
+          <div id="stock-alerts" class="stock-alert-list"></div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script>
+    // Mostrar fecha actual
+    document.getElementById('fecha-hoy').textContent =
+      new Date().toLocaleDateString('es-PE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  </script>
+</body>
+</html>

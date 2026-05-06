@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Historial de Ventas — Nova Salud</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">💊</div>
+      <div class="brand-text">
+        <div class="brand-name">Nova Salud</div>
+        <div class="brand-sub">Sistema de Ventas</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Menú Principal</div>
+      <a href="index.html" class="nav-link">
+        <span class="nav-icon">📊</span> Dashboard
+      </a>
+      <a href="inventario.html" class="nav-link">
+        <span class="nav-icon">📦</span> Inventario
+      </a>
+      <a href="historial.html" class="nav-link active">
+        <span class="nav-icon">🧾</span> Historial de Ventas
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-logout" onclick="logout()">
+        <span>🚪</span> Cerrar Sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title">Historial de Ventas</div>
+      <div class="topbar-right">
+        <div class="topbar-user">
+          <div class="user-avatar" id="user-avatar">A</div>
+          <div>
+            <div class="user-name" id="user-name">Administrador</div>
+            <div class="user-role" id="user-role">Vendedor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="page-header">
+        <div>
+          <h1>Historial de Ventas</h1>
+          <p>Consulta y filtra todas las transacciones registradas</p>
+        </div>
+      </div>
+
+      <!-- Tarjetas resumen -->
+      <div class="cards-grid" style="margin-bottom:24px;">
+        <div class="card stat-card" style="padding:18px;">
+          <div class="stat-label">Total Facturado</div>
+          <div class="stat-value" style="font-size:22px;" id="res-total">S/ 0.00</div>
+        </div>
+        <div class="card stat-card" style="padding:18px;">
+          <div class="stat-label">N° Ventas</div>
+          <div class="stat-value" style="font-size:22px;" id="res-count">0</div>
+        </div>
+        <div class="card stat-card" style="padding:18px;">
+          <div class="stat-label">Boletas</div>
+          <div class="stat-value" style="font-size:22px;color:#48bb78;" id="res-boletas">0</div>
+        </div>
+        <div class="card stat-card" style="padding:18px;">
+          <div class="stat-label">Facturas</div>
+          <div class="stat-value" style="font-size:22px;color:#0f4c81;" id="res-facturas">0</div>
+        </div>
+      </div>
+
+      <!-- Tabla con filtros -->
+      <div class="table-card">
+        <!-- Filtros -->
+        <div class="filter-bar">
+          <span class="filter-label">🔍 Filtrar:</span>
+
+          <div style="display:flex;align-items:center;gap:6px;">
+            <label style="font-size:12px;color:#718096;">Desde</label>
+            <input type="date" class="input" id="fecha-desde" />
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <label style="font-size:12px;color:#718096;">Hasta</label>
+            <input type="date" class="input" id="fecha-hasta" />
+          </div>
+
+          <select class="input select-input" id="filtro-tipo" style="min-width:130px;">
+            <option value="">Todos los tipos</option>
+            <option value="Boleta">Boleta</option>
+            <option value="Factura">Factura</option>
+          </select>
+
+          <button class="btn btn-primary btn-sm" id="btn-filtrar">Filtrar</button>
+          <button class="btn btn-outline btn-sm" id="btn-limpiar">Limpiar</button>
+        </div>
+
+        <!-- Header tabla -->
+        <div class="table-header">
+          <div>
+            <div class="table-title">🧾 Comprobantes de Venta</div>
+            <div style="font-size:12px;color:#718096;margin-top:2px;" id="total-registros">15 registros</div>
+          </div>
+        </div>
+
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>N° Comprobante</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Total</th>
+                <th>Tipo</th>
+              </tr>
+            </thead>
+            <tbody id="hist-tbody">
+              <tr class="empty-row"><td colspan="5">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script src="js/historial.js"></script>
+</body>
+</html>
