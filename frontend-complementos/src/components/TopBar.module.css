@@ -1,0 +1,39 @@
+.topbar {
+  height: 58px;
+  background: rgba(255,255,255,1);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(13,122,95,0.06);
+}
+.title {
+  font-family: var(--font-title);
+  font-size: 17px;
+  color: var(--color-text);
+}
+.right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.alertBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gradient-stat-red);
+  color: var(--color-danger);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  border: 1px solid rgba(192,57,43,0.15);
+}
+.fecha {
+  font-size: 12px;
+  color: var(--color-text-3);
+  text-transform: capitalize;
+}

@@ -1,0 +1,96 @@
+.sidebar {
+  width: 220px;
+  background: var(--gradient-sidebar);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 18px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.logoImg {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(13,122,95,0.4);
+  flex-shrink: 0;
+}
+.logoImg img { width: 100%; height: 100%; object-fit: cover; }
+.logoFallback {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.marcaNombre {
+  font-family: var(--font-title);
+  font-size: 15px; color: rgba(255,255,255,1);
+  letter-spacing: -.3px;
+}
+.marcaSub { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 1px; }
+
+/* NAV */
+.nav { flex: 1; padding: 10px 0; overflow-y: auto; }
+.navSection {
+  font-size: 10px;
+  color: rgba(255,255,255,0.28);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 14px 18px 5px;
+}
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px;
+  color: rgba(255,255,255,0.55);
+  font-size: 13px;
+  border-left: 3px solid transparent;
+  transition: all .15s ease;
+  text-decoration: none;
+}
+.navItem:hover {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+}
+.navItem.active {
+  background: rgba(13,122,95,0.35);
+  color: rgba(255,255,255,1);
+  border-left-color: rgba(240,165,0,1);
+}
+.navIcon {
+  width: 17px; height: 17px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.navIcon svg { width: 100%; height: 100%; }
+
+/* USUARIO */
+.userBox {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  background: rgba(0,0,0,0.15);
+}
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(13,122,95,0.8), rgba(10,99,80,0.8));
+  flex-shrink: 0;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.avatarFallback {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,1);
+}
+.userName  { font-size: 13px; color: rgba(255,255,255,0.9); font-weight: 500; }
+.userRole  { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 1px; }

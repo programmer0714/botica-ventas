@@ -1,0 +1,18 @@
+.prodIcon {
+  width: 30px; height: 30px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-light);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.stockBar {
+  width: 50px; height: 5px;
+  background: rgba(224,232,229,1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.stockFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width .3s;
+}
