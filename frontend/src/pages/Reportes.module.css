@@ -1,0 +1,31 @@
+.filtros {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 12px 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-card);
+}
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.reportCard {
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08), 0 5px 15px rgba(0,0,0,0.03), inset 0 2px 0 rgba(255,255,255,1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.reportCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 20%);
+  pointer-events: none;
+}
+
+.reportCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 45px rgba(15, 23, 42, 0.12), 0 8px 20px rgba(0,0,0,0.05), inset 0 2px 0 rgba(255,255,255,1);
+}

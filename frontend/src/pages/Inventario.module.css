@@ -1,0 +1,48 @@
+.prodIcon {
+  width: 30px; height: 30px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-light);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.stockBar {
+  width: 50px; height: 5px;
+  background: rgba(224,232,229,1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.stockFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width .3s;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--color-border);
+}
+.pagination span {
+  font-size: 13px;
+  color: var(--color-text-2);
+  font-weight: 500;
+}
+.pageBtn {
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: rgba(255,255,255,1);
+  color: var(--color-text-2);
+  transition: all .2s;
+  cursor: pointer;
+  font-family: inherit;
+}
+.pageBtn:hover {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}

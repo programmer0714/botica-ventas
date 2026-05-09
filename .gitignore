@@ -1,0 +1,39 @@
+# Dependencias (NUNCA subir!)
+node_modules/
+frontend-complementos/node_modules/
+backend-botica/node_modules/
+
+# Archivos de entorno (seguridad)
+.env
+.env.local
+.env.*.local
+
+# Archivos de build/logs/temp
+dist/
+build/
+*.log
+*.tmp
+.vite/
+.vite_temp*
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Archivos binarios de Windows/Linux
+*.cmd
+*.ps1
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Directorios temporales
+temp/
+tmp/
+_temp_*/
+deps_temp_*/
