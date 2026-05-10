@@ -49,3 +49,5 @@ backend-botica/node_modules/
 dist/
 build/
 
+node_modules/
+backend-botica/node_modules/
