@@ -37,3 +37,15 @@ temp/
 tmp/
 _temp_*/
 deps_temp_*/
+
+# Dependencias (Nunca deben subirse)
+node_modules/
+frontend-complementos/node_modules/
+backend-botica/node_modules/
+
+# Archivos sensibles
+.env
+.env.local
+dist/
+build/
+
