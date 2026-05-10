@@ -1,7 +1,6 @@
 /* === INVENTARIO — conectado a API === */
 import { useState, useEffect, useCallback } from 'react'
 import styles from './Inventario.module.css'
-import iconMedicamento from '../assets/icons/icon-medicamento.svg'
 import {
   getProductos, buscarProductos,
   crearProducto, editarProducto, eliminarProducto,
@@ -82,7 +81,6 @@ export default function Inventario() {
   const inicio        = (paginaSegura - 1) * POR_PAGINA
   const productosPag  = productosFiltrados.slice(inicio, inicio + POR_PAGINA)
 
-  // Reiniciar página al cambiar filtro o búsqueda
   useEffect(() => setPagina(1), [busqueda, filtroEstado])
 
   // ── Modal ─────────────────────────────────────────────────────────────────
@@ -123,13 +121,11 @@ export default function Inventario() {
   }
 
   const handleGuardar = async () => {
-    // Validación básica
     const { nombre, precio, stock, stock_minimo } = form
     if (!nombre.trim() || precio === '' || stock === '' || stock_minimo === '') {
       setMsgModal({ tipo: 'error', texto: 'Completa los campos obligatorios: nombre, precio, stock y stock mínimo.' })
       return
     }
-
     setGuardando(true)
     setMsgModal(null)
     try {
@@ -177,8 +173,6 @@ export default function Inventario() {
         <div className="card-header">
           <h3 className="card-title">Inventario de Productos</h3>
           <div style={{ display: 'flex', gap: '8px' }}>
-
-            {/* Buscador */}
             <div style={{ position: 'relative' }}>
               <IconSearch style={{
                 position: 'absolute', left: '10px', top: '50%',
@@ -194,7 +188,6 @@ export default function Inventario() {
               />
             </div>
 
-            {/* Filtro estado */}
             <select
               className="form-control"
               style={{ width: '190px' }}
@@ -229,7 +222,7 @@ export default function Inventario() {
           <table>
             <thead>
               <tr>
-                <th>Producto</th><th>Laboratorio</th>
+                <th>Producto</th><th>Categoría</th><th>Laboratorio</th>
                 <th>Presentación</th><th>Stock</th><th>Precio</th>
                 <th>Vencimiento</th><th>Estado</th><th>Acciones</th>
               </tr>
@@ -237,13 +230,13 @@ export default function Inventario() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={8} style={{ textAlign: 'center', padding: '32px', color: 'var(--color-text-3)' }}>
+                  <td colSpan={9} style={{ textAlign: 'center', padding: '32px', color: 'var(--color-text-3)' }}>
                     Cargando productos...
                   </td>
                 </tr>
               ) : productosPag.length === 0 ? (
                 <tr>
-                  <td colSpan={8} style={{ textAlign: 'center', padding: '32px', color: 'var(--color-text-3)' }}>
+                  <td colSpan={9} style={{ textAlign: 'center', padding: '32px', color: 'var(--color-text-3)' }}>
                     No se encontraron productos.
                   </td>
                 </tr>
@@ -251,12 +244,14 @@ export default function Inventario() {
                 <tr key={p.id_producto}>
                   <td>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <div className={styles.prodIcon}>
-                        <img src={iconMedicamento} alt="" width="16"
-                          onError={e => (e.target.style.display = 'none')} />
-                      </div>
+                      <IconCategoria categoria={p.categoria} />
                       <span style={{ fontWeight: 500 }}>{p.nombre}</span>
                     </div>
+                  </td>
+                  <td>
+                    <span style={{ fontSize: '12px', color: 'var(--color-text-3)' }}>
+                      {p.categoria ?? '—'}
+                    </span>
                   </td>
                   <td>{p.laboratorio ?? '—'}</td>
                   <td>{p.presentacion ?? '—'}</td>
@@ -357,15 +352,12 @@ export default function Inventario() {
               <h3 style={{ fontWeight: 700, fontSize: '16px' }}>
                 {modoEditar ? 'Editar Producto' : 'Nuevo Producto'}
               </h3>
-              <button
-                onClick={cerrarModal}
-                style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer', color: 'var(--color-text-3)' }}
-              >
+              <button onClick={cerrarModal}
+                style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer', color: 'var(--color-text-3)' }}>
                 ×
               </button>
             </div>
 
-            {/* Campos */}
             <div className="form-group">
               <label className="form-label">Nombre <span style={{color:'var(--color-danger)'}}>*</span></label>
               <input name="nombre" className="form-control"
@@ -424,40 +416,89 @@ export default function Inventario() {
               </div>
             </div>
 
-            <p style={{ fontSize: '11px', color: 'var(--color-text-3)', marginBottom: '16px' }}>
-              💡 Los IDs de Laboratorio, Categoría y Presentación puedes consultarlos directamente en phpMyAdmin.
-            </p>
+            <div style={{
+              background: 'rgba(13,122,95,0.06)', borderRadius: '8px',
+              padding: '10px 14px', marginBottom: '16px', fontSize: '12px',
+              color: 'var(--color-text-3)',
+            }}>
+              <strong>IDs de referencia:</strong><br/>
+              Laboratorio: 1=Pharma, 2=Portugal, 3=Hersil, 4=Abott<br/>
+              Categoría: 1=Analgésico, 2=Antibiótico, 3=Antiinflamatorio, 4=Antialérgico, 5=Gastrointestinal, 6=Vitaminas<br/>
+              Presentación: 1=Pastilla, 2=Cápsula, 3=Jarabe, 4=Inyectable, 5=Inhalador
+            </div>
 
-            {/* Mensaje del modal */}
             {msgModal && (
               <div style={{
                 padding: '10px 14px', borderRadius: '8px', marginBottom: '14px',
                 fontSize: '13px',
-                background: msgModal.tipo === 'ok'
-                  ? 'rgba(16,185,129,0.1)' : 'rgba(220,38,38,0.08)',
-                color: msgModal.tipo === 'ok'
-                  ? 'var(--color-success)' : 'var(--color-danger)',
-                border: `1px solid ${msgModal.tipo === 'ok'
-                  ? 'rgba(16,185,129,0.25)' : 'rgba(220,38,38,0.25)'}`,
+                background: msgModal.tipo === 'ok' ? 'rgba(16,185,129,0.1)' : 'rgba(220,38,38,0.08)',
+                color: msgModal.tipo === 'ok' ? 'var(--color-success)' : 'var(--color-danger)',
+                border: `1px solid ${msgModal.tipo === 'ok' ? 'rgba(16,185,129,0.25)' : 'rgba(220,38,38,0.25)'}`,
               }}>
                 {msgModal.tipo === 'ok' ? '✅' : '⚠️'} {msgModal.texto}
               </div>
             )}
 
-            {/* Botones */}
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
               <button className="btn btn-outline" onClick={cerrarModal} disabled={guardando}>
                 Cancelar
               </button>
               <button className="btn btn-primary" onClick={handleGuardar} disabled={guardando}>
-                {guardando
-                  ? 'Guardando...'
-                  : modoEditar ? 'Guardar cambios' : 'Crear producto'}
+                {guardando ? 'Guardando...' : modoEditar ? 'Guardar cambios' : 'Crear producto'}
               </button>
             </div>
           </div>
         </div>
       )}
+    </div>
+  )
+}
+
+/* ── Ícono por categoría ───────────────────────────────────────────────────── */
+function IconCategoria({ categoria }) {
+  const iconos = {
+    'Analgésico': {
+      color: '#dc2626', bg: '#fef2f2',
+      path: 'M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z',
+    },
+    'Antibiótico': {
+      color: '#2563eb', bg: '#eff6ff',
+      path: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
+    },
+    'Antiinflamatorio': {
+      color: '#d97706', bg: '#fffbeb',
+      path: 'M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z',
+    },
+    'Antialérgico': {
+      color: '#7c3aed', bg: '#f5f3ff',
+      path: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z',
+    },
+    'Gastrointestinal': {
+      color: '#059669', bg: '#ecfdf5',
+      path: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+    },
+    'Vitaminas': {
+      color: '#ea580c', bg: '#fff7ed',
+      path: 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z',
+    },
+  }
+
+  const icono = iconos[categoria] ?? {
+    color: '#6b7280', bg: '#f3f4f6',
+    path: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+  }
+
+  return (
+    <div style={{
+      width: '34px', height: '34px', borderRadius: '9px',
+      background: icono.bg, flexShrink: 0,
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+    }}>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+        stroke={icono.color} strokeWidth="2"
+        strokeLinecap="round" strokeLinejoin="round">
+        <path d={icono.path} />
+      </svg>
     </div>
   )
 }

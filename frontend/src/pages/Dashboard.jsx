@@ -25,18 +25,18 @@ export default function Dashboard() {
   }, [])
 
   // Armar STATS con datos reales
-  const STATS = datos ? [
+    const STATS = datos ? [
     {
       label: 'Ventas Hoy',
-      value: `S/ ${Number(datos.ventas_hoy?.total_hoy || 0).toLocaleString('es-PE', {minimumFractionDigits:2})}`,
-      change: `${datos.ventas_hoy?.cantidad_hoy || 0} transacciones`,
+      value: `S/ ${Number(datos.ventas_hoy || 0).toLocaleString('es-PE', {minimumFractionDigits:2})}`,
+      change: `${datos.cantidad_hoy || 0} transacciones`,
       up: true,
       gradient: 'var(--gradient-stat-green)',
       iconColor: 'var(--color-primary)'
     },
     {
       label: 'Stock Bajo',
-      value: String(datos.stock_bajo?.cantidad || 0),
+      value: String(datos.stock_bajo || 0),
       change: 'productos bajo mínimo',
       up: false,
       gradient: 'var(--gradient-stat-red)',
@@ -44,7 +44,7 @@ export default function Dashboard() {
     },
     {
       label: 'Boletas emitidas',
-      value: String(datos.ventas_hoy?.cantidad_hoy || 0),
+      value: String(datos.cantidad_hoy || 0),
       change: 'hoy',
       up: true,
       gradient: 'var(--gradient-stat-yellow)',
@@ -52,8 +52,8 @@ export default function Dashboard() {
     },
     {
       label: 'Reclamaciones',
-      value: '0',
-      change: 'sin pendientes',
+      value: String(datos.reclamaciones_pendientes || 0),
+      change: 'pendientes',
       up: false,
       gradient: 'var(--gradient-stat-blue)',
       iconColor: 'var(--color-primary)'
@@ -113,7 +113,19 @@ export default function Dashboard() {
             <BarChart data={VENTAS_SEMANA} barSize={28}>
               <XAxis dataKey="dia" tick={{fontSize:12, fill:'rgba(138,160,155,1)'}} axisLine={false} tickLine={false} />
               <YAxis tick={{fontSize:11, fill:'rgba(138,160,155,1)'}} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={{borderRadius:'10px', border:'1px solid rgba(224,232,229,1)', fontSize:12}} />
+              <Tooltip
+                  contentStyle={{
+                    borderRadius: '10px',
+                    border: '1px solid rgba(224,232,229,1)',
+                    fontSize: 12,
+                    background: '#fff',
+                    color: '#1a1a2e',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  }}
+                  formatter={(value) => [`S/ ${Number(value).toFixed(2)}`, 'Total']}
+                  labelStyle={{ fontWeight: 700, color: '#1a1a2e', marginBottom: '4px' }}
+                  cursor={{ fill: 'rgba(153,6,6,0.06)' }}
+                />
               <Bar dataKey="total" fill="rgba(220, 38, 38, 0.2)" stroke="rgba(153, 6, 6, 1)" strokeWidth={2} radius={[6,6,0,0]} />
             </BarChart>
           </ResponsiveContainer>
